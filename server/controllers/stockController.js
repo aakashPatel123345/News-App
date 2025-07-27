@@ -4,7 +4,10 @@ import axios from 'axios';
 export const getStockData = async (req, res) => {
     const { ticker } = req.params;
     const apiKey = process.env.POLYGON_API_KEY;
-    console.log(apiKey)
+
+    // Add this debug line
+    console.log("API Key exists:", !!apiKey);
+    console.log("Attempting to getStockData with ticker: " + ticker);
 
     try {
         const response = await axios.get(`https://api.polygon.io/v3/reference/tickers/${ticker.toUpperCase()}`, {
@@ -13,7 +16,7 @@ export const getStockData = async (req, res) => {
             },
         });
         if (response.data && response.data.results) {
-            res.status(200).json(response.data.results);
+            res.status(200).json(response.data);
         } else {
             res.status(404).json({ message: 'Ticker not found' });
         }

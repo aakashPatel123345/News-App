@@ -1,11 +1,10 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
-
 import app from './app.js';
 import mongoose from 'mongoose'
 
-const PORT = process.env.PORT || 3000;
+import dotenv from 'dotenv';
+dotenv.config();
+
+const PORT = process.env.PORT || 8000;
 
 const connectDB = async () => {
     try {
