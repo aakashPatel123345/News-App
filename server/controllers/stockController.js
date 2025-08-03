@@ -1,4 +1,4 @@
-// This file containes the controller for getting stock data from the polygon API
+// This file contains the controller for getting stock data from the polygon API
 import axios from 'axios';
 
 export const getStockData = async (req, res) => {
@@ -7,7 +7,7 @@ export const getStockData = async (req, res) => {
 
     // Add this debug line
     console.log("API Key exists:", !!apiKey);
-    console.log("Attempting to getStockData with ticker: " + ticker);
+    console.log("Attempting to getStockData with ticker:", ticker.toUpperCase());
 
     try {
         const response = await axios.get(`https://api.polygon.io/v3/reference/tickers/${ticker.toUpperCase()}`, {
@@ -16,12 +16,14 @@ export const getStockData = async (req, res) => {
             },
         });
         if (response.data && response.data.results) {
+            console.log("Successfully fetched data for ticker:", ticker);
             res.status(200).json(response.data);
         } else {
+            console.log("No results found for ticker:", ticker);
             res.status(404).json({ message: 'Ticker not found' });
         }
     } catch (error) {
         console.error("Error calling Polygon API:", error);
         res.status(500).json({ message: 'Error fetching stock data', error: error.message });
     }
-}
+};
