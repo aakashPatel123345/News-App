@@ -34,8 +34,8 @@ body {
 
 /* Main Container */
 .main-container {
-  max-width: 600px;
-  margin: 3rem auto;
+  max-width: 1200px;
+  margin: 2rem auto;
   padding: 2rem;
   background: var(--card-background);
   border-radius: var(--border-radius);
@@ -202,6 +202,165 @@ body {
   color: var(--primary-color);
 }
 
+/* News Section Styles */
+.news-section {
+  margin-top: 3rem;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.news-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.news-header h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 0.5rem 0;
+}
+
+.news-header p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* News Grid */
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* News Card */
+.news-card {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.news-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-color);
+}
+
+.news-image {
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  background: var(--background-color);
+}
+
+.news-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.news-card:hover .news-image img {
+  transform: scale(1.05);
+}
+
+.news-content {
+  padding: 1rem;
+}
+
+.news-title {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.news-title a {
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.news-title a:hover {
+  color: var(--primary-color);
+}
+
+.news-description {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  margin: 0 0 1rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.news-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.625rem;
+  color: var(--text-muted);
+}
+
+.news-source {
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
+.news-date {
+  color: var(--text-muted);
+}
+
+/* News Loading State */
+.news-loading {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+}
+
+.loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border-color);
+  border-top: 2px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.news-loading p {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+/* News Empty State */
+.news-empty {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-muted);
+  background: var(--background-color);
+  border-radius: var(--border-radius);
+  border: 1px dashed var(--border-color);
+}
+
+.news-empty p {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
 /* Empty State */
 .main-container h3:last-child {
   text-align: center;
@@ -238,10 +397,35 @@ body {
 }
 
 /* Responsive Design */
-@media (max-width: 640px) {
+@media (max-width: 1024px) {
+  .news-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
   .main-container {
+    max-width: 100%;
     margin: 1rem;
     padding: 1.5rem;
+  }
+  
+  .news-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .news-card {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .main-container {
+    margin: 0.5rem;
+    padding: 1rem;
   }
   
   .stock-search-header {
@@ -269,11 +453,15 @@ body {
   .total_employees-data-container {
     padding: 0.875rem;
   }
+  
+  .news-content {
+    padding: 0.875rem;
+  }
 }
 
 @media (max-width: 480px) {
   .main-container {
-    padding: 1rem;
+    padding: 0.875rem;
   }
   
   .stock-search-header {
@@ -282,6 +470,10 @@ body {
   
   .results-information-grid {
     padding: 0.875rem;
+  }
+  
+  .news-header h2 {
+    font-size: 1.25rem;
   }
 }
 

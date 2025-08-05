@@ -1,9 +1,12 @@
 import { useState } from "react";
 import axios from 'axios'
 
+import StockNews from './StockNews';
+
 const StockSearch = () => {
     const [ticker, setTicker] = useState('');
     const [stockData, setStockData] = useState(null);
+    const [newsData, setNewsData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -15,21 +18,38 @@ const StockSearch = () => {
 
         setLoading(true);
         setError(null);
+        setStockData(null);
+        setNewsData(null);
         
         try {
-            const response = await axios.get(`/api/stocks/${ticker.toUpperCase()}`);
-            console.log('Stock response:', response.data);
+            // Fetch stock data first
+            const stockResponse = await axios.get(`/api/stocks/${ticker.toUpperCase()}`);
+            console.log('Stock response:', stockResponse.data);
             
-            if (response.data && response.data.results) {
-                setStockData(response.data.results);
+            if (stockResponse.data && stockResponse.data.results) {
+                const stockResult = stockResponse.data.results;
+                setStockData(stockResult);
+                
+                // Fetch news data using the company name from stock data
+                if (stockResult.name) {
+                    try {
+                        const newsResponse = await axios.get(`/api/news/${stockResult.name}`);
+                        console.log('News response:', newsResponse.data);
+
+                        if (newsResponse.data && newsResponse.data.articles) {
+                            setNewsData(newsResponse.data.articles);
+                        }
+                    } catch (newsErr) {
+                        console.error('News error:', newsErr);
+                        // Don't set error for news - it's optional
+                    }
+                }
             } else {
                 setError('No data found for this ticker');
-                setStockData(null);
             }
         } catch (err) {
             console.error('Search error:', err);
             setError(err.response?.data?.message || 'Error fetching stock data');
-            setStockData(null);
         } finally {
             setLoading(false);
         }
@@ -109,6 +129,9 @@ const StockSearch = () => {
                     </div>
                 </div>
             )}
+
+            {/* News Section */}
+            <StockNews newsData={newsData} loading={loading} />
 
             {!stockData && !loading && !error && (
                 <h3>Nothing being searched at the moment.</h3>
