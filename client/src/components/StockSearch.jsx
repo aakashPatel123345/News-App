@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from 'axios'
 
 import StockNews from './StockNews';
+import StockResults from './StockResults';
 
 const StockSearch = () => {
     const [ticker, setTicker] = useState('');
@@ -94,41 +95,9 @@ const StockSearch = () => {
                     {error}
                 </div>
             )}
-                
-            {stockData && (
-                <div className="results-container">
-                    <div className="results-information-grid">
-                        
-                        {stockData.branding?.logo_url && (
-                            <div className="company_logo">
-                                <img src={stockData.branding.logo_url} alt="Company logo" />
-                            </div>
-                        )}
-                        
-                        {stockData.name && (
-                            <div className="company_name_container">
-                                <h3>Company</h3>
-                                <p>{stockData.name}</p>
-                            </div>
-                        )}
 
-                        {stockData.primary_exchange && (
-                            <div className="primary_exhange">
-                                <h3>Primary Exchange</h3>
-                                <p>{stockData.primary_exchange}</p>
-                            </div>
-                        )}
-
-                        {stockData.total_employees && (
-                            <div className="total_employees-data-container">
-                                <h3>Total Employees</h3>
-                                <p>{stockData.total_employees.toLocaleString()}</p>
-                            </div>
-                        )}
-                        
-                    </div>
-                </div>
-            )}
+            {/* Stock Results */}
+            <StockResults stockData={stockData} />
 
             {/* News Section */}
             <StockNews newsData={newsData} loading={loading} />

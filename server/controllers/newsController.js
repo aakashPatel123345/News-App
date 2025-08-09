@@ -12,7 +12,7 @@ export const getNewsData = async (req, res) => {
                 apiKey: apiKey,
                 q: `"${companyName}"`,
                 language: 'en',
-                sortBy: 'publishedAt',
+                sortBy: 'relevance',
                 pageSize: 10,
                 page: 1
             },
